@@ -1,13 +1,18 @@
 import "dotenv/config";
 import express from "express";
 import { connectDB } from "./config/db.js";
+import metricsRoutes from "./routes/metrics.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
+
+app.use("/metrics", metricsRoutes);
 
 async function start() {
   await connectDB();
