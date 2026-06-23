@@ -3,6 +3,7 @@ import express from "express";
 import { connectDB } from "./config/db.js";
 import metricsRoutes from "./routes/metrics.routes.js";
 import replenishmentRoutes from "./routes/replenishment.routes.js";
+import aiReplenishmentRoutes from "./routes/aiReplenishment.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/metrics", metricsRoutes);
 app.use("/replenish", replenishmentRoutes);
+app.use("/ai-replenish", aiReplenishmentRoutes);
 
 async function start() {
   await connectDB();
