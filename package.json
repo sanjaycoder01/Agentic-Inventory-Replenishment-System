@@ -6,19 +6,24 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
+    "worker": "node src/workers/replenishment.worker.js",
+    "sqs-worker": "node src/workers/sqsWorker.js",
     "seed": "node src/scripts/seedData.js",
+    "simulate-order": "node src/scripts/simulateOrder.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1072.0",
+    "@aws-sdk/client-sqs": "^3.1075.0",
     "@langchain/core": "^1.2.0",
     "@langchain/langgraph": "^1.4.4",
     "@langchain/openai": "^1.5.1",
+    "bullmq": "^5.79.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "ioredis": "^5.11.1",
     "mongoose": "^9.7.1"
   },
   "devDependencies": {

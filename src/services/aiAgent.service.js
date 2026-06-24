@@ -149,19 +149,24 @@ async function analyzeNode(state) {
     return { aiRaw: null };
   }
 
-  const llm = new ChatOpenAI({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-    temperature: 0,
-  });
+  try {
+    const llm = new ChatOpenAI({
+      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      temperature: 0,
+    });
 
-  const prompt = buildPrompt(state.metrics, state.trend, state.ruleDecision);
-  const response = await llm.invoke(prompt);
-  const content =
-    typeof response.content === "string"
-      ? response.content
-      : response.content.map((c) => c.text ?? "").join("");
+    const prompt = buildPrompt(state.metrics, state.trend, state.ruleDecision);
+    const response = await llm.invoke(prompt);
+    const content =
+      typeof response.content === "string"
+        ? response.content
+        : response.content.map((c) => c.text ?? "").join("");
 
-  return { aiRaw: content };
+    return { aiRaw: content };
+  } catch (err) {
+    console.warn("AI analysis failed, falling back to rules:", err.message);
+    return { aiRaw: null };
+  }
 }
 
 function decideNode(state) {
